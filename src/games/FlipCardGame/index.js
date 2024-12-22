@@ -20,29 +20,29 @@ const LEVELS = {
     grid: 2,
     pairs: 2,
   },
-  // 3: { 
-  //   grid: 2,
-  //   pairs: 3,
-  // },
-  // 4: { 
-  //   grid: 3,
-  //   pairs: 4,
-  // },
-  // 5: { 
-  //   grid: 3,
-  //   pairs: 6,
-  // },
-  // 6: { 
-  //   grid: 3,
-  //   pairs: 6,
-  // },
-  // 7: { 
-  //   grid: 3,
-  //   pairs: 7,
-  // }
+  3: { 
+    grid: 2,
+    pairs: 3,
+  },
+  4: { 
+    grid: 3,
+    pairs: 4,
+  },
+  5: { 
+    grid: 3,
+    pairs: 6,
+  },
+  6: { 
+    grid: 3,
+    pairs: 6,
+  },
+  7: { 
+    grid: 3,
+    pairs: 7,
+  }
 };
 
-const TotalLevel = 2;
+const TotalLevel = 7;
 
 // Add card images mapping at the top of the file
 const CARD_IMAGES = {

@@ -1,0 +1,23 @@
+{
+  "header_text": "kidsActivities",
+  "lottieAnimation": "../../res/tiger.json",
+  "cardsData": [
+
+    {
+      "heading_text": {
+        "en": "Flip & Match Cards",
+        "hi": "कार्ड पलटें और मिलाएं"
+      },
+      "sub_heading_text": {
+        "en": "Improve memory and concentration with card matching game",
+        "hi": "कार्ड मिलान खेल के साथ याददाश्त और एकाग्रता में सुधार करें"
+      },
+      "button_text": "playNow",
+      "cardColor": "#E3F2FD",
+      "textColor": "#2196F3",
+      "buttonGradient": ["#2196F3", "#64B5F6"],
+      "action": "game_activity",
+      "type": "FlipCardGame"
+    }
+  ]
+}

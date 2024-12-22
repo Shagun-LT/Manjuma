@@ -9,7 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import LottieView from 'lottie-react-native';
 import styles from './styles';
 import { LanguageContext } from '../../context/LanguageContext';
-import { GlobalDevelopmentalDelayData, AutismSpectrumDisorderData, HyperactivityDisorderData } from '../../data/parentsActivity';
+import { GlobalDevelopmentalDelayData, AutismSpectrumDisorderData, HyperactivityDisorderData, kidsActivityData } from '../../data/parentsActivity';
 
 const translations = {
   en: {
@@ -142,7 +142,7 @@ const FunActivityScreen = (props) => {
 
   const handleActivityPress = (action, type, details) => {
     if (action === 'game_activity') {
-      // navigation.navigate('BallSortGame');
+      navigation.navigate(type);
     } else if (action === 'parent_activity') {
       navigation.navigate('ActivityDetails', { 
         type,
@@ -167,7 +167,7 @@ const FunActivityScreen = (props) => {
 
   const sections = activityData && Object.keys(activityData).length > 0 ? [
     {
-      ...activityData.kidsActivityData,
+      ...kidsActivityData,
       animation: require('../../res/tiger.json'),
     },
     {

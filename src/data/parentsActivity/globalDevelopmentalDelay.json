@@ -1,42 +1,4 @@
 {
-  "kidsActivityData": {
-    "header_text": "kidsActivities",
-    "lottieAnimation": "../../res/tiger.json",
-    "cardsData": [
-      {
-        "heading_text": {
-          "en": "Ball sort puzzle",
-          "hi": "गेंद छांटने की पहेली"
-        },
-        "sub_heading_text": {
-          "en": "Sort colorful balls to match patterns and develop logical thinking",
-          "hi": "तार्किक सोच विकसित करने के लिए रंगीन गेंदों को पैटर्न से मिलान करें"
-        },
-        "button_text": "playNow",
-        "cardColor": "#FFF5F7",
-        "textColor": "#FF4081",
-        "buttonGradient": ["#FF4081", "#FF79B0"],
-        "action": "game_activity",
-        "type": "puzzle"
-      },
-      {
-        "heading_text": {
-          "en": "Math & Nursery Quiz",
-          "hi": "गणित और नर्सरी क्विज"
-        },
-        "sub_heading_text": {
-          "en": "Fun Quizzes combining basic math and nursery rhymes",
-          "hi": "बुनियादी गणित और नर्सरी कविताओं को मिलाकर मजेदार प्रश्नोत्तरी"
-        },
-        "button_text": "startQuiz",
-        "cardColor": "#F0F7FF",
-        "textColor": "#2196F3",
-        "buttonGradient": ["#2196F3", "#64B5F6"],
-        "action": "game_activity",
-        "type": "quiz"
-      }
-    ]
-  },
   "parentsActivityData": {
     "header_text": "parentsActivities",
     "lottieAnimation": "../../res/parent.json",
@@ -255,7 +217,7 @@
               "सही पीने की तकनीक प्रदर्शित करें",
               "शुरू में शारीरिक सहायता प्रदान करें",
               "धीरे-धीरे सहायता कम करें",
-              "वि��िन्न कप आकारों के साथ अभ्यास करें",
+              "विभिन्न कप आकारों के साथ अभ्यास करें",
               "स्वतंत्र रूप से पकड़ने को प्रोत्साहित करें"
             ]
           }

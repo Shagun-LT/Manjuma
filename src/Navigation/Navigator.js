@@ -13,8 +13,16 @@ import DisordersScreen from '../screens/DisordersScreen';
 import GameActivity from '../screens/GameActivity';
 import DietScreen from '../screens/DietScreen';
 import ActivityDetails from '../screens/ActivityDetails';
+import BallSortGame from '../games/BallSortGame';
+import FlipCardGame from '../games/FlipCardGame';
 
 const Stack = createNativeStackNavigator();
+
+// Add this function to check if current screen is a game
+const isGameScreen = (screenName) => {
+  const gameScreens = ['FlipCardGame', 'BallSortGame', 'GameActivity'];
+  return gameScreens.includes(screenName);
+};
 
 const Navigator = () => {
   const [currentScreen, setCurrentScreen] = useState('DescriptionScreen');
@@ -74,10 +82,25 @@ const Navigator = () => {
           component={ActivityDetails}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="BallSortGame"
+          component={BallSortGame}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FlipCardGame"
+          component={FlipCardGame}
+          options={{
+            title: 'Flip Card',
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
-      <View style={styles.languageToggleContainer}>
-        <LanguageToggleButton currentScreen={currentScreen} />
-      </View>
+      {!isGameScreen(currentScreen) && (
+        <View style={styles.languageToggleContainer}>
+          <LanguageToggleButton currentScreen={currentScreen} />
+        </View>
+      )}
     </View>
   );
 };

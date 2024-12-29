@@ -215,7 +215,7 @@ const GDDQuizScreen = ({ route, navigation }) => {
       return;
     }
 
-    navigation.navigate('GDDResultScreen', {
+    navigation.replace('GDDResultScreen', {
       patientInfo,
       totalScore,
       ageInMonths,

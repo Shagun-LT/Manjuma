@@ -15,9 +15,16 @@ import DietScreen from '../screens/DietScreen';
 import ActivityDetails from '../screens/ActivityDetails';
 import BallSortGame from '../games/BallSortGame';
 import FlipCardGame from '../games/FlipCardGame';
+
+// Global Developmental Delay (GDD) Quiz
 import GDDScreeningForm from '../screens/GDDQuiz/GDDScreeningForm';
 import GDDQuizScreen from '../screens/GDDQuiz/GDDQuizScreen';
 import GDDResultScreen from '../screens/GDDQuiz/GDDResultScreen';
+
+// Autism Spectrum Disorder (ASD) Quiz
+import ASDScreeningForm from '../screens/ASDQuiz/ASDScreeningForm';
+import ASDQuizScreen from '../screens/ASDQuiz/ASDQuizScreen';
+import ASDResultScreen from '../screens/ASDQuiz/ASDResultScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -112,6 +119,27 @@ const Navigator = () => {
           name="GDDResultScreen" 
           component={GDDResultScreen}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="ASDScreeningForm" 
+          component={ASDScreeningForm}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="ASDQuizScreen" 
+          component={ASDQuizScreen}
+          options={{ 
+            headerShown: false,
+            gestureEnabled: false
+          }}
+        />
+        <Stack.Screen 
+          name="ASDResultScreen" 
+          component={ASDResultScreen}
+          options={{ 
+            headerShown: false,
+            gestureEnabled: false
+          }}
         />
       </Stack.Navigator>
       {!isGameScreen(currentScreen) && (

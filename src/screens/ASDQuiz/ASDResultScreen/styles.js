@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 30,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   resultCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: 'white',
     borderRadius: 15,
     padding: 20,
     marginBottom: 20,
@@ -28,23 +28,52 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    borderBottomColor: '#E5E7EB',
   },
   label: {
     fontSize: 16,
-    color: '#4B5563',
+    color: '#374151',
     fontWeight: '500',
   },
   value: {
     fontSize: 16,
-    color: '#1F2937',
+    color: '#111827',
     fontWeight: '600',
   },
-  quotient: {
-    fontSize: 20,
-    color: '#A855F7',
+  categoryContainer: {
+    marginTop: 20,
+    padding: 15,
+    borderRadius: 10,
+  },
+  categoryLabel: {
+    fontSize: 16,
+    color: '#374151',
+    fontWeight: '500',
+    marginBottom: 5,
+  },
+  categoryValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  scaleContainer: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 10,
+  },
+  scaleHeader: {
+    fontSize: 16,
+    color: '#374151',
+    fontWeight: '600',
+    marginBottom: 10,
+  },
+  scaleItem: {
+    fontSize: 14,
+    color: '#4B5563',
+    marginBottom: 5,
   },
   button: {
     borderRadius: 8,
@@ -54,13 +83,10 @@ const styles = StyleSheet.create({
   gradientButton: {
     paddingVertical: 14,
     alignItems: 'center',
-    justifyContent: 'center',
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
   },
-});
-
-export default styles; 
+}); 

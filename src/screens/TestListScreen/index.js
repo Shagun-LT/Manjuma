@@ -12,6 +12,15 @@ const TestListScreen = props => {
   const {navigation} = props;
   const {isHindi} = useLanguage();
 
+  const navigate = (screen) => {
+    // Check if this is GDD disorder and Quiz is selected
+    if (params.disorderId === 1 && screen === 'TestScreen') {
+      navigation.navigate('GDDScreeningForm', params);
+    } else {
+      navigation.navigate(screen, params);
+    }
+  };
+
   const testData = [
     {
       name: isHindi ? 'प्रश्नोत्तरी' : 'Quiz',
@@ -47,10 +56,6 @@ const TestListScreen = props => {
       textColor: '#01579B',
     },
   ];
-
-  const navigate = screen => {
-    navigation.navigate(screen, params);
-  };
 
   const ItemBox = (test, index) => (
     <TouchableWithoutFeedback

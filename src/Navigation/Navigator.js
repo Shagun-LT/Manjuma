@@ -15,6 +15,9 @@ import DietScreen from '../screens/DietScreen';
 import ActivityDetails from '../screens/ActivityDetails';
 import BallSortGame from '../games/BallSortGame';
 import FlipCardGame from '../games/FlipCardGame';
+import GDDScreeningForm from '../screens/GDDQuiz/GDDScreeningForm';
+import GDDQuizScreen from '../screens/GDDQuiz/GDDQuizScreen';
+import GDDResultScreen from '../screens/GDDQuiz/GDDResultScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -94,6 +97,21 @@ const Navigator = () => {
             title: 'Flip Card',
             headerShown: false,
           }}
+        />
+        <Stack.Screen 
+          name="GDDScreeningForm" 
+          component={GDDScreeningForm}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="GDDQuizScreen" 
+          component={GDDQuizScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="GDDResultScreen" 
+          component={GDDResultScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
       {!isGameScreen(currentScreen) && (

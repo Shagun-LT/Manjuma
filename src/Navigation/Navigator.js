@@ -26,6 +26,11 @@ import ASDScreeningForm from '../screens/ASDQuiz/ASDScreeningForm';
 import ASDQuizScreen from '../screens/ASDQuiz/ASDQuizScreen';
 import ASDResultScreen from '../screens/ASDQuiz/ASDResultScreen';
 
+// Attention Deficit/Hyperactivity Disorder (ADHD) Quiz
+import ADHDScreeningForm from '../screens/ADHDQuiz/ADHDScreeningForm';
+import ADHDQuizScreen from '../screens/ADHDQuiz/ADHDQuizScreen';
+import ADHDResultScreen from '../screens/ADHDQuiz/ADHDResultScreen';
+
 const Stack = createNativeStackNavigator();
 
 // Add this function to check if current screen is a game
@@ -118,7 +123,10 @@ const Navigator = () => {
         <Stack.Screen 
           name="GDDResultScreen" 
           component={GDDResultScreen}
-          options={{ headerShown: false }}
+          options={{ 
+            headerShown: false,
+            gestureEnabled: false
+          }}
         />
         <Stack.Screen 
           name="ASDScreeningForm" 
@@ -136,6 +144,27 @@ const Navigator = () => {
         <Stack.Screen 
           name="ASDResultScreen" 
           component={ASDResultScreen}
+          options={{ 
+            headerShown: false,
+            gestureEnabled: false
+          }}
+        />
+        <Stack.Screen 
+          name="ADHDScreeningForm" 
+          component={ADHDScreeningForm}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="ADHDQuizScreen" 
+          component={ADHDQuizScreen}
+          options={{ 
+            headerShown: false,
+            gestureEnabled: false
+          }}
+        />
+        <Stack.Screen 
+          name="ADHDResultScreen" 
+          component={ADHDResultScreen}
           options={{ 
             headerShown: false,
             gestureEnabled: false

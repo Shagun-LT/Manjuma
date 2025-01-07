@@ -13,11 +13,14 @@ const TestListScreen = props => {
   const {isHindi} = useLanguage();
 
   const navigate = (screen) => {
-    // Check if this is GDD disorder and Quiz is selected
-    if (params.disorderId === 1 && screen === 'TestScreen') {
-      navigation.navigate('GDDScreeningForm', params);
-    } else if (params.disorderId === 2 && screen === 'TestScreen') {
-      navigation.navigate('ASDScreeningForm', params);
+    const disorderForms = {
+      1: 'GDDScreeningForm',
+      2: 'ASDScreeningForm',
+      3: 'ADHDScreeningForm'
+    };
+
+    if (screen === 'TestScreen' && disorderForms[params.disorderId]) {
+      navigation.navigate(disorderForms[params.disorderId], params);
     } else {
       navigation.navigate(screen, params);
     }

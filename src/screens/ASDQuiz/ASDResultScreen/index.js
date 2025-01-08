@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, BackHandler } from 'react-nat
 import LinearGradient from 'react-native-linear-gradient';
 import { useLanguage } from '../../../context/LanguageContext';
 import styles from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ASDResultScreen = ({ route, navigation }) => {
   const { isHindi } = useLanguage();
@@ -24,6 +25,11 @@ const ASDResultScreen = ({ route, navigation }) => {
       gestureEnabled: false,
     });
   }, [navigation]);
+
+  // Call setQuizLockTime when component mounts
+  useEffect(() => {
+    setQuizLockTime();
+  }, []);
 
   const getAutismCategory = (score) => {
     if (score < 70) {
@@ -50,6 +56,12 @@ const ASDResultScreen = ({ route, navigation }) => {
   };
 
   const result = getAutismCategory(totalScore);
+
+  const setQuizLockTime = async () => {
+    const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000;
+    const lockEndTime = new Date().getTime() + threeMonths;
+    await AsyncStorage.setItem('asdQuizLockTime', lockEndTime.toString());
+  };
 
   return (
     <LinearGradient
@@ -101,7 +113,10 @@ const ASDResultScreen = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.replace('DisorderScreen')}>
+            onPress={() => {
+              setQuizLockTime(); // Also call when finishing
+              navigation.replace('DisorderScreen');
+            }}>
             <LinearGradient
               colors={['#F472B6', '#C084FC']}
               start={{ x: 0, y: 0 }}

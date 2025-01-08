@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, BackHandler } from 'react-nat
 import LinearGradient from 'react-native-linear-gradient';
 import { useLanguage } from '../../../context/LanguageContext';
 import styles from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const GDDResultScreen = ({ route, navigation }) => {
   const { isHindi } = useLanguage();
@@ -24,6 +25,18 @@ const GDDResultScreen = ({ route, navigation }) => {
       gestureEnabled: false,
     });
   }, [navigation]);
+
+  // Call setQuizLockTime when component mounts
+  useEffect(() => {
+    setQuizLockTime();
+  }, []);
+
+  // In useEffect
+  const setQuizLockTime = async () => {
+    const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000;
+    const lockEndTime = new Date().getTime() + threeMonths;
+    await AsyncStorage.setItem('gddQuizLockTime', lockEndTime.toString());
+  };
 
   return (
     <LinearGradient
@@ -70,7 +83,10 @@ const GDDResultScreen = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.replace('DisorderScreen')}>
+            onPress={() =>{ 
+              setQuizLockTime(); // Also call when finishing  
+              navigation.replace('DisorderScreen')
+            }}>
             <LinearGradient
               colors={['#F472B6', '#C084FC']}
               start={{ x: 0, y: 0 }}

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useLanguage } from '../../../context/LanguageContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 
 const { width } = Dimensions.get('window');
@@ -20,6 +21,14 @@ const ADHDResultScreen = ({ route, navigation }) => {
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    // Set quiz lock time when showing results
+    const setQuizLockTime = async () => {
+      const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000; // 3 months in milliseconds
+      const lockEndTime = new Date().getTime() + threeMonths;
+      await AsyncStorage.setItem('adhdQuizLockTime', lockEndTime.toString());
+    };
+    
+    setQuizLockTime();
     // Initial animations
     Animated.sequence([
       // Fade in header

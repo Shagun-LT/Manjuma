@@ -1,24 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, lazy, Suspense} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LanguageToggleButton from './LanguageToggleButton';
 
-// Screens
+// Core screens that are frequently accessed
 import DescriptionScreen from '../screens/DescriptionScreen';
 import TestListScreen from '../screens/TestListScreen';
-import TestScreen from '../screens/TestScreen';
-import FunActivityScreen from '../screens/FunActivityScreen';
-import LeaderboardScreen from '../screens/LeaderboardScreen';
 import DisordersScreen from '../screens/DisordersScreen';
-import GameActivity from '../screens/GameActivity';
-import DietScreen from '../screens/DietScreen';
-import ActivityDetails from '../screens/ActivityDetails';
-import BallSortGame from '../games/BallSortGame';
-import FlipCardGame from '../games/FlipCardGame';
-import FlappyBirdGame from '../games/FlappyBirdGame';
+
+// Lazy load less frequently accessed screens
+const TestScreen = lazy(() => import('../screens/TestScreen'));
+const FunActivityScreen = lazy(() => import('../screens/FunActivityScreen'));
+const LeaderboardScreen = lazy(() => import('../screens/LeaderboardScreen'));
+const GameActivity = lazy(() => import('../screens/GameActivity'));
+const DietScreen = lazy(() => import('../screens/DietScreen'));
+const ActivityDetails = lazy(() => import('../screens/ActivityDetails'));
+
+// Lazy load games
+const BallSortGame = lazy(() => import('../games/BallSortGame'));
+const FlipCardGame = lazy(() => import('../games/FlipCardGame'));
+const FlappyBirdGame = lazy(() => import('../games/FlappyBirdGame'));
+
+// Lazy load quiz screens
+const GDDScreeningForm = lazy(() => import('../screens/GDDQuiz/GDDScreeningForm'));
 
 // Global Developmental Delay (GDD) Quiz
-import GDDScreeningForm from '../screens/GDDQuiz/GDDScreeningForm';
 import GDDQuizScreen from '../screens/GDDQuiz/GDDQuizScreen';
 import GDDResultScreen from '../screens/GDDQuiz/GDDResultScreen';
 
@@ -32,11 +38,13 @@ import ADHDScreeningForm from '../screens/ADHDQuiz/ADHDScreeningForm';
 import ADHDQuizScreen from '../screens/ADHDQuiz/ADHDQuizScreen';
 import ADHDResultScreen from '../screens/ADHDQuiz/ADHDResultScreen';
 
+import SnakeGame from '../games/SnakeGame';
+
 const Stack = createNativeStackNavigator();
 
 // Add this function to check if current screen is a game
 const isGameScreen = (screenName) => {
-  const gameScreens = ['FlipCardGame', 'BallSortGame', 'GameActivity', 'FlappyBirdGame'];
+  const gameScreens = ['FlipCardGame', 'BallSortGame', 'GameActivity', 'FlappyBirdGame', 'SnakeGame'];
   return gameScreens.includes(screenName);
 };
 
@@ -174,6 +182,11 @@ const Navigator = () => {
         <Stack.Screen
           name="FlappyBirdGame"
           component={FlappyBirdGame}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SnakeGame"
+          component={SnakeGame}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -34,6 +34,22 @@
       "buttonGradient": ["#4CAF50", "#81C784"],
       "action": "game_activity",
       "type": "FlappyBirdGame"
+    },
+    {
+      "heading_text": {
+        "en": "Snake Game",
+        "hi": "सांप का खेल"
+      },
+      "sub_heading_text": {
+        "en": "Classic snake game to test your skills and reflexes",
+        "hi": "अपने कौशल और प्रतिक्रिया का परीक्षण करने के लिए क्लासिक स्नेक गेम"
+      },
+      "button_text": "playNow",
+      "cardColor": "#F3E5F5",
+      "textColor": "#9C27B0",
+      "buttonGradient": ["#9C27B0", "#BA68C8"],
+      "action": "game_activity",
+      "type": "SnakeGame"
     }
   ]
 }

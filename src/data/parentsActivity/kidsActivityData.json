@@ -18,6 +18,22 @@
       "buttonGradient": ["#2196F3", "#64B5F6"],
       "action": "game_activity",
       "type": "FlipCardGame"
+    },
+    {
+      "heading_text": {
+        "en": "Flappy Bird",
+        "hi": "फ्लैपी बर्ड"
+      },
+      "sub_heading_text": {
+        "en": "Test your reflexes and coordination in this exciting game",
+        "hi": "इस रोमांचक खेल में अपनी प्रतिक्रिया और समन्वय का परीक्षण करें"
+      },
+      "button_text": "playNow",
+      "cardColor": "#E8F5E9",
+      "textColor": "#4CAF50",
+      "buttonGradient": ["#4CAF50", "#81C784"],
+      "action": "game_activity",
+      "type": "FlappyBirdGame"
     }
   ]
 }

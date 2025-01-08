@@ -15,6 +15,7 @@ import DietScreen from '../screens/DietScreen';
 import ActivityDetails from '../screens/ActivityDetails';
 import BallSortGame from '../games/BallSortGame';
 import FlipCardGame from '../games/FlipCardGame';
+import FlappyBirdGame from '../games/FlappyBirdGame';
 
 // Global Developmental Delay (GDD) Quiz
 import GDDScreeningForm from '../screens/GDDQuiz/GDDScreeningForm';
@@ -35,7 +36,7 @@ const Stack = createNativeStackNavigator();
 
 // Add this function to check if current screen is a game
 const isGameScreen = (screenName) => {
-  const gameScreens = ['FlipCardGame', 'BallSortGame', 'GameActivity'];
+  const gameScreens = ['FlipCardGame', 'BallSortGame', 'GameActivity', 'FlappyBirdGame'];
   return gameScreens.includes(screenName);
 };
 
@@ -169,6 +170,11 @@ const Navigator = () => {
             headerShown: false,
             gestureEnabled: false
           }}
+        />
+        <Stack.Screen
+          name="FlappyBirdGame"
+          component={FlappyBirdGame}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
       {!isGameScreen(currentScreen) && (

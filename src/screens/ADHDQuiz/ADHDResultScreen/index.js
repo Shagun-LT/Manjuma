@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, Animated, Dimensions } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, TouchableOpacity, Animated, Dimensions, Linking, Alert, ActivityIndicator } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useLanguage } from '../../../context/LanguageContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,6 +13,7 @@ const ADHDResultScreen = ({ route, navigation }) => {
     patientInfo, 
     adhdType,
   } = route.params;
+  const [isEmailSending, setIsEmailSending] = useState(false);
 
   // Animations
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -48,7 +49,56 @@ const ADHDResultScreen = ({ route, navigation }) => {
 
     // Start pulsing animation for type text
     startPulseAnimation();
+  }, [fadeAnim, slideAnim]);
+
+  // Add new useEffect to trigger email on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      sendEmail();
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  const sendEmail = async () => {
+    setIsEmailSending(true);
+    const subject = isHindi ? 'एडीएचडी परिणाम' : 'ADHD Results';
+    const translatedType = isHindi ? (
+      adhdType === 'PREDOMINANTLY INATTENTIVE TYPE' ? 'मुख्य रूप से अनवधान प्रकार' :
+      adhdType === 'PREDOMINANTLY HYPERACTIVE/IMPULSIVE SUBTYPE' ? 'मुख्य रूप से अतिसक्रिय/आवेगी प्रकार' :
+      'संयुक्त प्रकार'
+    ) : adhdType;
+
+    const body = `
+${isHindi ? 'नाम' : 'Name'}: ${patientInfo.name}
+${isHindi ? 'आयु' : 'Age'}: ${patientInfo.age}
+${isHindi ? 'एडीएचडी प्रकार' : 'ADHD Type'}: ${translatedType}`;
+
+    try {
+      // Try Gmail first
+      const gmailUrl = `gmail://co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const canOpenGmail = await Linking.canOpenURL(gmailUrl);
+      
+      if (canOpenGmail) {
+        await Linking.openURL(gmailUrl);
+        setIsEmailSending(false);
+        return;
+      }
+
+      // Try default mailto as fallback
+      const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      await Linking.openURL(mailtoUrl);
+      setIsEmailSending(false);
+
+    } catch (error) {
+      console.error('Error opening email:', error);
+      Alert.alert(
+        isHindi ? 'त्रुटि' : 'Error',
+        isHindi ? 'ईमेल क्लाइंट नहीं मिला' : 'Email client not found'
+      );
+      setIsEmailSending(false);
+    }
+  };
 
   const startPulseAnimation = () => {
     Animated.loop(
@@ -107,6 +157,14 @@ const ADHDResultScreen = ({ route, navigation }) => {
     <LinearGradient
       colors={['#F472B6', '#C084FC', '#A855F7']}
       style={styles.container}>
+      {isEmailSending && (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color="#ffffff" />
+          <Text style={styles.loaderText}>
+            {isHindi ? 'ईमेल भेज रहा है...' : 'Sending email...'}
+          </Text>
+        </View>
+      )}
       <View style={styles.content}>
         <Animated.Text 
           style={[
@@ -160,6 +218,17 @@ const ADHDResultScreen = ({ route, navigation }) => {
               transform: [{ scale: buttonScale }]
             }
           ]}>
+          <TouchableOpacity
+            onPress={sendEmail}
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
+            disabled={isEmailSending}
+            style={[styles.homeButton, styles.emailButton]}>
+            <Text style={styles.buttonText}>
+              {isHindi ? 'ईमेल भेजें' : 'Send Email'}
+            </Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={onPressHome}
             onPressIn={onPressIn}

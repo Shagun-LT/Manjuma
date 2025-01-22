@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, BackHandler } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, BackHandler, Linking, Share, Alert, ActivityIndicator } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useLanguage } from '../../../context/LanguageContext';
 import styles from './styles';
@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const ASDResultScreen = ({ route, navigation }) => {
   const { isHindi } = useLanguage();
   const { patientInfo, totalScore } = route.params;
+  const [isEmailSending, setIsEmailSending] = useState(false);
 
   // Prevent going back with hardware back button
   useEffect(() => {
@@ -30,6 +31,16 @@ const ASDResultScreen = ({ route, navigation }) => {
   useEffect(() => {
     setQuizLockTime();
   }, []);
+
+  // Add new useEffect to trigger email on mount
+  useEffect(() => {
+    // Small delay to ensure the screen is fully rendered
+    const timer = setTimeout(() => {
+      sendEmail();
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []); // Empty dependency array means this runs once when component mounts
 
   const getAutismCategory = (score) => {
     if (score < 70) {
@@ -63,12 +74,61 @@ const ASDResultScreen = ({ route, navigation }) => {
     await AsyncStorage.setItem('asdQuizLockTime', lockEndTime.toString());
   };
 
+  const sendEmail = async () => {
+    setIsEmailSending(true);
+    const subject = isHindi ? 'आई.एस.ए.ए परिणाम' : 'ISAA Results';
+    const body = `
+${isHindi ? 'नाम' : 'Name'}: ${patientInfo.name}
+${isHindi ? 'आयु' : 'Age'}: ${patientInfo.age}
+${isHindi ? 'कुल अंक' : 'Total Score'}: ${totalScore}
+${isHindi ? 'श्रेणी' : 'Category'}: ${result.category}
+
+${isHindi ? 'अंक श्रेणियां' : 'Score Categories'}:
+• <70: ${isHindi ? 'ऑटिज्म नहीं' : 'No Autism'}
+• 70-106: ${isHindi ? 'हल्का ऑटिज्म' : 'Mild Autism'}
+• 107-153: ${isHindi ? 'मध्यम ऑटिज्म' : 'Moderate Autism'}
+• >153: ${isHindi ? 'गंभीर ऑटिज्म' : 'Severe Autism'}`;
+
+    try {
+      // Try Gmail first
+      const gmailUrl = `gmail://co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const canOpenGmail = await Linking.canOpenURL(gmailUrl);
+      
+      if (canOpenGmail) {
+        await Linking.openURL(gmailUrl);
+        setIsEmailSending(false);
+        return;
+      }
+
+      // Try default mailto as fallback
+      const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      await Linking.openURL(mailtoUrl);
+      setIsEmailSending(false);
+
+    } catch (error) {
+      console.error('Error opening email:', error);
+      Alert.alert(
+        isHindi ? 'त्रुटि' : 'Error',
+        isHindi ? 'ईमेल क्लाइंट नहीं मिला' : 'Email client not found'
+      );
+      setIsEmailSending(false);
+    }
+  };
+
   return (
     <LinearGradient
       colors={['#F472B6', '#C084FC', '#A855F7']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.container}>
+      {isEmailSending && (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color="#ffffff" />
+          <Text style={styles.loaderText}>
+            {isHindi ? 'ईमेल भेज रहा है...' : 'Sending email...'}
+          </Text>
+        </View>
+      )}
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
           <Text style={styles.headerText}>
@@ -113,8 +173,23 @@ const ASDResultScreen = ({ route, navigation }) => {
 
           <TouchableOpacity
             style={styles.button}
+            onPress={sendEmail}
+            disabled={isEmailSending}>
+            <LinearGradient
+              colors={['#F472B6', '#C084FC']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={[styles.gradientButton, isEmailSending && styles.disabledButton]}>
+              <Text style={styles.buttonText}>
+                {isHindi ? 'ईमेल भेजें' : 'Send Email'}
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
             onPress={() => {
-              setQuizLockTime(); // Also call when finishing
+              setQuizLockTime();
               navigation.replace('DisorderScreen');
             }}>
             <LinearGradient

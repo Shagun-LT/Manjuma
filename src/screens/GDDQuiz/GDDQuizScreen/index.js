@@ -105,7 +105,7 @@ const ageGroupScores = {
   '1 Year': 0.75,
   '1 Year and 6 Months': 1.5,
   '2 Years': 1.5,
-  '3 Years': 2.5,
+  '3 Years': 2.0,
   '4 Years': 2.4,
   '5 Years': 2.0
 };

@@ -131,7 +131,7 @@ const DescriptionScreen = props => {
   const titleLetters = 'Manjuma'.split('');
 
   const descriptionText =
-    'Manjuma is a comprehensive mental health app designed to provide kids with tools, resources, and support for their psychological well - being.Whether youre looking to manage stress, improve mindfulness, or track your mood, MindBalance offers a variety of features tailored to meet your needs.';
+    `Manjuma, the ultimate app designed to revolutionize support for children with Autism Spectrum Disorder, ADHD and Global Developmental Delay. With smart screening, engaging activities, expert guidance, and personalized diet plans, it's your all-in-one tool for holistic development and brighter futures.`;
 
   const startTitlePulse = () => {
     Animated.loop(

@@ -46,4 +46,8 @@ export default StyleSheet.create({
     textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 2,
   },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 20,
+  },
 });

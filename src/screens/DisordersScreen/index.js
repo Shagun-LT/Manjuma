@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {useLanguage} from '../../context/LanguageContext';
@@ -80,7 +80,11 @@ const DisordersScreen = ({navigation}) => {
       <Text style={styles.headingText}>
         {isHindi ? 'विकार' : 'Disorders'}
       </Text>
-      {testData.map(renderDisorderCard)}
+      <ScrollView 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}>
+        {testData.map(renderDisorderCard)}
+      </ScrollView>
     </LinearGradient>
   );
 };

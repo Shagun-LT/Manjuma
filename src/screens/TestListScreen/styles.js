@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 10,
   },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 20,
+  },
   headingText: {
     color: Colors.white,
     fontSize: 32,

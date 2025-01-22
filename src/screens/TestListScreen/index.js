@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState, useEffect, useRef } from 'react';
-import {View, Text, TouchableWithoutFeedback, Animated} from 'react-native';
+import {View, Text, TouchableWithoutFeedback, Animated, ScrollView} from 'react-native';
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
@@ -19,6 +19,9 @@ const TestListScreen = props => {
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
 
+  // Extract the complex expression to a variable
+  const currentDisorderLock = quizLocks[params.disorderId];
+
   useEffect(() => {
     checkQuizLocks();
     const interval = setInterval(checkQuizLocks, 1000);
@@ -26,7 +29,7 @@ const TestListScreen = props => {
   }, []);
 
   useEffect(() => {
-    if (quizLocks[params.disorderId]) {
+    if (currentDisorderLock) {
       // Start pulsing animation
       Animated.loop(
         Animated.sequence([
@@ -63,7 +66,7 @@ const TestListScreen = props => {
       pulseAnim.setValue(1);
       fadeAnim.setValue(1);
     }
-  }, [quizLocks[params.disorderId]]);
+  }, [currentDisorderLock, fadeAnim, pulseAnim]);
 
   const checkQuizLocks = async () => {
     try {
@@ -235,12 +238,16 @@ const TestListScreen = props => {
       start={{x: 0, y: 0}}
       end={{x: 1, y: 1}}
       style={styles.container}>
-      <Text style={styles.headingText}>
-        {isHindi ? 'गतिविधि क्षेत्र' : 'Activity Area'}
-      </Text>
-      {testData.map((item, index) => {
-        return ItemBox(item, index);
-      })}
+      <ScrollView 
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}>
+        <Text style={styles.headingText}>
+          {isHindi ? 'गतिविधि क्षेत्र' : 'Activity Area'}
+        </Text>
+        {testData.map((item, index) => {
+          return ItemBox(item, index);
+        })}
+      </ScrollView>
     </LinearGradient>
   );
 };

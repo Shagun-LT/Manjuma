@@ -45,69 +45,108 @@ const DietScreen = props => {
   const dietPlans = {
     en: [
       {
-        title: 'Essential Minerals',
-        description: 'Key minerals that help reduce ADHD symptoms',
+        title: 'Zinc',
+        description: 'Helps to produce dopamine, serotonin and melatonin which helps to reduce inattention and hyperactivity.',
         tips: [
-          'Zinc: chicken, legumes, yogurt',
-          'Iron: red meat, turkey, shellfish, beans',
-          'Magnesium: leafy greens, nuts, fish, cereals',
+          'Chicken',
+          'Legumes',
+          'Yogurt'
         ],
         timeOfDay: 'Daily Essential',
         lottieIcon: lottieIcons.chicken,
       },
       {
-        title: 'Brain-Boosting Foods',
-        description: 'Foods that enhance cognitive function and attention',
+        title: 'Iron',
+        description: 'Produces dopamine and plays an important factor in controlling symptoms of ADHD.',
         tips: [
-          'Omega-3: walnuts, flaxseeds, chia seeds, fish',
-          'Vitamin B: chicken, turkey, tuna, brown rice',
-          'Vitamin B: cheese, sunflower seeds, carrots',
+          'Red meat',
+          'Turkey and chicken',
+          'Shellfish',
+          'Beans and lentils'
         ],
-        timeOfDay: 'All meals',
-        lottieIcon: lottieIcons.fish
-      },
-      {
-        title: 'Protein-Rich Foods',
-        description: 'Proteins help with neurotransmitter production',
-        tips: [
-          'Lean meats: chicken, turkey, red meat',
-          'Seafood: tuna, shellfish',
-          'Plant proteins: lentils, beans, legumes',
-        ],
-        timeOfDay: 'Main meals',
+        timeOfDay: 'Daily Essential',
         lottieIcon: lottieIcons.chicken
       },
       {
-        title: 'Gut Health Foods',
-        description: 'Foods supporting digestive and mental health',
+        title: 'Magnesium',
+        description: 'Creates neurotransmitters involved in executive functions such as attention.',
         tips: [
-          'Probiotics: yogurt, bananas',
-          'Prebiotics: onions, garlic',
-          'Gluten-free options',
+          'Leafy green cereals',
+          'Nuts',
+          'Fish'
+        ],
+        timeOfDay: 'Daily Essential',
+        lottieIcon: lottieIcons.fish
+      },
+      {
+        title: 'Vitamin B',
+        description: 'Essential for proper metabolism and brain function.',
+        tips: [
+          'Chicken and turkey',
+          'Tuna and brown rice',
+          'Cheese and sunflower seeds',
+          'Carrots'
+        ],
+        timeOfDay: 'Daily',
+        lottieIcon: lottieIcons.chicken
+      },
+      {
+        title: 'Omega-3',
+        description: 'Necessary for normal brain function, improves attention duration and reduces hyperactivity.',
+        tips: [
+          'Walnuts and flaxseeds',
+          'Chia seeds',
+          'Fish',
+          'Leafy greens'
+        ],
+        timeOfDay: 'Daily',
+        lottieIcon: lottieIcons.fish
+      },
+      {
+        title: 'Gluten-free Diet',
+        description: 'Helps reduce gastrointestinal inflammation.',
+        tips: [
+          'Fruits and vegetables',
+          'Beans, seeds, and legumes',
+          'Nuts and eggs',
+          'Low-fat dairy products'
+        ],
+        timeOfDay: 'Daily',
+        lottieIcon: lottieIcons.fruits
+      },
+      {
+        title: 'Probiotics & Gut Health',
+        description: 'Improves immune function, produces vitamins and aids in nutrient absorption.',
+        tips: [
+          'Yogurt',
+          'Bananas',
+          'Onions',
+          'Garlic'
         ],
         timeOfDay: 'Daily',
         lottieIcon: lottieIcons.banana
       },
       {
-        title: 'Antioxidant-Rich Foods',
-        description: 'Foods that protect brain health',
+        title: 'Antioxidants',
+        description: 'Protects brain health and supports overall cognitive function.',
         tips: [
-          'Fruits: oranges, grapes, kiwi, watermelon',
-          'Vegetables: spinach',
-          'Healthy fats: almonds, olive oil',
+          'Oranges, grapes, kiwi',
+          'Watermelon',
+          'Spinach',
+          'Almonds and olive oil'
         ],
         timeOfDay: 'Daily',
         lottieIcon: lottieIcons.orange
       },
       {
         title: 'Foods to Avoid',
-        description: 'Foods that may worsen ADHD symptoms',
+        description: 'These foods can worsen ADHD symptoms and should be limited or avoided.',
         tips: [
-          'High sugar foods and drinks',
+          'High sugar foods (increases inattention)',
           'Artificial colors and additives',
           'Fast food and processed snacks',
           'Ready-made meals',
-          'Sodas and artificial beverages',
+          'Sodas and artificial beverages'
         ],
         timeOfDay: 'Avoid',
         isWarning: true,
@@ -228,13 +267,18 @@ const DietScreen = props => {
       <Animatable.View ref={ref => (cardRefs.current[index] = ref)}>
         <LinearGradient
           colors={
-            diet.isWarning ? ['#FFCDD2', '#EF9A9A'] : getCardColors(index)
+            diet.isWarning 
+              ? ['#FF8A80', '#FF5252'] // Lighter, more pleasant red gradient
+              : getCardColors(index)
           }
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
           style={styles.gradientCard}>
           <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>{diet.title}</Text>
+            <Text style={[
+              styles.cardTitle,
+              // diet.isWarning && { color: '#FFFFFF' }
+            ]}>{diet.title}</Text>
             <Animatable.Text
               animation="pulse"
               iterationCount="infinite"
@@ -243,7 +287,7 @@ const DietScreen = props => {
             </Animatable.Text>
           </View>
           <View style={styles.descriptionWrapper}>
-            <Text style={styles.cardDescription}>{diet.description}</Text>
+          <Text style={styles.cardDescription}>{diet.description}</Text>
             <View style={styles.lottieWrapper}>
               <LottieView
                 source={diet.lottieIcon}

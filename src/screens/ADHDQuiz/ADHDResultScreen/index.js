@@ -24,8 +24,8 @@ const ADHDResultScreen = ({ route, navigation }) => {
   useEffect(() => {
     // Set quiz lock time when showing results
     const setQuizLockTime = async () => {
-      const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000; // 3 months in milliseconds
-      const lockEndTime = new Date().getTime() + threeMonths;
+      const twoMonths = 2 * 30 * 24 * 60 * 60 * 1000; // 2 months in milliseconds
+      const lockEndTime = new Date().getTime() + twoMonths;
       await AsyncStorage.setItem('adhdQuizLockTime', lockEndTime.toString());
     };
     
@@ -62,6 +62,7 @@ const ADHDResultScreen = ({ route, navigation }) => {
 
   const sendEmail = async () => {
     setIsEmailSending(true);
+    const toEmail = 'garimabehl1310@gmail.com';
     const subject = isHindi ? 'एडीएचडी परिणाम' : 'ADHD Results';
     const translatedType = isHindi ? (
       adhdType === 'PREDOMINANTLY INATTENTIVE TYPE' ? 'मुख्य रूप से अनवधान प्रकार' :
@@ -76,7 +77,7 @@ ${isHindi ? 'एडीएचडी प्रकार' : 'ADHD Type'}: ${transla
 
     try {
       // Try Gmail first
-      const gmailUrl = `gmail://co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const gmailUrl = `gmail://co?to=${toEmail}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       const canOpenGmail = await Linking.canOpenURL(gmailUrl);
       
       if (canOpenGmail) {
@@ -86,7 +87,7 @@ ${isHindi ? 'एडीएचडी प्रकार' : 'ADHD Type'}: ${transla
       }
 
       // Try default mailto as fallback
-      const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const mailtoUrl = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       await Linking.openURL(mailtoUrl);
       setIsEmailSending(false);
 

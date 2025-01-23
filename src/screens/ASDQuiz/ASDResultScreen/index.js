@@ -69,13 +69,14 @@ const ASDResultScreen = ({ route, navigation }) => {
   const result = getAutismCategory(totalScore);
 
   const setQuizLockTime = async () => {
-    const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000;
-    const lockEndTime = new Date().getTime() + threeMonths;
+    const twoMonths = 2 * 30 * 24 * 60 * 60 * 1000;
+    const lockEndTime = new Date().getTime() + twoMonths;
     await AsyncStorage.setItem('asdQuizLockTime', lockEndTime.toString());
   };
 
   const sendEmail = async () => {
     setIsEmailSending(true);
+    const toEmail = 'garimabehl1310@gmail.com';
     const subject = isHindi ? 'आई.एस.ए.ए परिणाम' : 'ISAA Results';
     const body = `
 ${isHindi ? 'नाम' : 'Name'}: ${patientInfo.name}
@@ -91,7 +92,7 @@ ${isHindi ? 'अंक श्रेणियां' : 'Score Categories'}:
 
     try {
       // Try Gmail first
-      const gmailUrl = `gmail://co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const gmailUrl = `gmail://co?to=${toEmail}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       const canOpenGmail = await Linking.canOpenURL(gmailUrl);
       
       if (canOpenGmail) {
@@ -101,7 +102,7 @@ ${isHindi ? 'अंक श्रेणियां' : 'Score Categories'}:
       }
 
       // Try default mailto as fallback
-      const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const mailtoUrl = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       await Linking.openURL(mailtoUrl);
       setIsEmailSending(false);
 

@@ -44,13 +44,14 @@ const GDDResultScreen = ({ route, navigation }) => {
 
   // In useEffect
   const setQuizLockTime = async () => {
-    const threeMonths = 3 * 30 * 24 * 60 * 60 * 1000;
-    const lockEndTime = new Date().getTime() + threeMonths;
+    const twoMonths = 2 * 30 * 24 * 60 * 60 * 1000;
+    const lockEndTime = new Date().getTime() + twoMonths;
     await AsyncStorage.setItem('gddQuizLockTime', lockEndTime.toString());
   };
 
   const sendEmail = async () => {
     setIsEmailSending(true);
+    const toEmail = 'garimabehl1310@gmail.com';
     const subject = isHindi ? 'जी.डी.डी परिणाम' : 'GDD Results';
     const body = `
 ${isHindi ? 'नाम' : 'Name'}: ${patientInfo.name}
@@ -61,7 +62,7 @@ ${isHindi ? 'विकास भागफल' : 'Developmental Quotient'}: ${dev
 
     try {
       // Try Gmail first
-      const gmailUrl = `gmail://co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const gmailUrl = `gmail://co?to=${toEmail}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       const canOpenGmail = await Linking.canOpenURL(gmailUrl);
       
       if (canOpenGmail) {
@@ -71,7 +72,7 @@ ${isHindi ? 'विकास भागफल' : 'Developmental Quotient'}: ${dev
       }
 
       // Try default mailto as fallback
-      const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const mailtoUrl = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       await Linking.openURL(mailtoUrl);
       setIsEmailSending(false);
 

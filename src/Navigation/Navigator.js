@@ -39,12 +39,20 @@ import ADHDQuizScreen from '../screens/ADHDQuiz/ADHDQuizScreen';
 import ADHDResultScreen from '../screens/ADHDQuiz/ADHDResultScreen';
 
 import SnakeGame from '../games/SnakeGame';
+import FruitIdentifierGame from '../games/FruitIdentifierGame';
 
 const Stack = createNativeStackNavigator();
 
 // Add this function to check if current screen is a game
 const isGameScreen = (screenName) => {
-  const gameScreens = ['FlipCardGame', 'BallSortGame', 'GameActivity', 'FlappyBirdGame', 'SnakeGame'];
+  const gameScreens = [
+    'FlipCardGame', 
+    'BallSortGame', 
+    'GameActivity', 
+    'FlappyBirdGame', 
+    'SnakeGame',
+    'FruitIdentifierGame'
+  ];
   return gameScreens.includes(screenName);
 };
 
@@ -188,6 +196,14 @@ const Navigator = () => {
           name="SnakeGame"
           component={SnakeGame}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FruitIdentifierGame"
+          component={FruitIdentifierGame}
+          options={{ 
+            headerShown: false,
+            gestureEnabled: false 
+          }}
         />
       </Stack.Navigator>
       {!isGameScreen(currentScreen) && (

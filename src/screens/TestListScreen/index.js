@@ -7,6 +7,7 @@ import styles from './styles';
 import Colors from '../../CustomeStyles/Colors';
 import LinearGradient from 'react-native-linear-gradient';
 import {useLanguage} from '../../context/LanguageContext';
+import FruitIdentifierGame from '../../games/FruitIdentifierGame';
 
 const TestListScreen = props => {
   const params = props.route.params;
@@ -96,7 +97,15 @@ const TestListScreen = props => {
     }
   };
 
-  const navigate = (screen) => {
+  const navigate = (screen, component) => {
+    if (component) {
+      // If component exists, render it directly in GameScreen
+      return navigation.navigate('GameScreen', { 
+        component: component,
+        name: isHindi ? 'फल पहचानें' : 'Identify Fruits'  // Add appropriate title
+      });
+    }
+
     const disorderForms = {
       1: 'GDDScreeningForm',
       2: 'ASDScreeningForm',

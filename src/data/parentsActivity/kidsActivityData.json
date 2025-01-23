@@ -50,6 +50,22 @@
       "buttonGradient": ["#9C27B0", "#BA68C8"],
       "action": "game_activity",
       "type": "SnakeGame"
+    },
+    {
+      "heading_text": {
+        "en": "Fruit Identifier",
+        "hi": "फल पहचानें"
+      },
+      "sub_heading_text": {
+        "en": "Learn to identify different fruits in a fun way",
+        "hi": "मजेदार तरीके से विभिन्न फलों को पहचानना सीखें"
+      },
+      "button_text": "playNow",
+      "cardColor": "#FFF3E0",
+      "textColor": "#FF9800",
+      "buttonGradient": ["#FF9800", "#FFB74D"],
+      "action": "game_activity",
+      "type": "FruitIdentifierGame"
     }
   ]
 }

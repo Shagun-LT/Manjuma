@@ -72,6 +72,10 @@ const ADHDScreeningForm = ({ navigation, route }) => {
     if (!formData.place) newErrors.place = '*';
     if (!formData.contactNumber) newErrors.contactNumber = '*';
 
+    if (formData.contactNumber && formData.contactNumber.length < 10) {
+      newErrors.contactNumber = isHindi ? 'कृपया 10 अंकों का नंबर दर्ज करें' : 'Please enter a 10-digit number';
+    }
+
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
@@ -219,8 +223,14 @@ const ADHDScreeningForm = ({ navigation, route }) => {
               <TextInput
                 style={[styles.input, errors.contactNumber && styles.inputError]}
                 value={formData.contactNumber}
+                maxLength={10}
                 onChangeText={(text) => {
                   setFormData({ ...formData, contactNumber: text });
+
+                  // Validation for 10-digit contact number
+                  if (text.length < 10) {
+                    setErrors({ ...errors, contactNumber: isHindi ? 'कृपया 10 अंकों का नंबर दर्ज करें' : 'Please enter a 10-digit number' });
+                  }
                   if (errors.contactNumber) setErrors({ ...errors, contactNumber: '' });
                 }}
                 placeholder={isHindi ? 'संपर्क नंबर दर्ज करें' : 'Enter contact number'}
